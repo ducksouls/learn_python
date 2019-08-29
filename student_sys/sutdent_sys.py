@@ -2,7 +2,7 @@
 @Description: 控制台学生管理系统
 @Author: lai
 @Date: 2019-08-26 22:40:05
-@LastEditTime: 2019-08-27 00:24:31
+@LastEditTime: 2019-08-30 01:09:12
 @LastEditors: Please set LastEditors
 '''
 
@@ -40,14 +40,14 @@ def insert():
     stu_list = []
     mark = True
     while mark:
-        id = input("请输入学号")
+        id = input("请输入学号:")
         if not id:# if not id is None, if id is None都可以
             print("格式有误---请重新输入")
-            break
-        name = input("请输入名字")
+            continue
+        name = input("请输入名字:")
         if not name:
             print("格式有误---请重新输入")
-            break
+            continue
         try:
             chinese = int(input("请输入语文成绩："))
             math = int(input("请输入数学成绩："))
@@ -56,17 +56,30 @@ def insert():
             print("格式有误---请输入整数")
             continue
         stu_list.append({'id' : id, 'name' : name,'chinese':chinese,'math' : math,'english':english})
-        yes_no = input("是否要继续录入学生信息（y/n）?")
+        yes_no = input("是否要继续录入学生信息（y/n）?: ")
         if yes_no == 'y' :
             pass
         else:
             mark = False
-        print(stu_list)
+        #print(stu_list)
+    save2file(stu_list)
+    
 
+def save2file(stu_list):
+    with open('stu.info','a+',encoding="utf-8") as file:
+        keys = list(stu_list[0].keys())
+        stu_infos = []
+        for stu in stu_list:
+            values = list(stu.values())
+            str1 = r': %s , '.join(keys)
+            str2 =str1 +  r': %s'
+            str3 = str2 % tuple(values)
+            stu_infos.append(str3+'\n')
+        # 不会自动换行。。。
+        file.writelines(stu_infos)
+        
 
-# def save2file():
-
-
+    
 # def search():
 
 
